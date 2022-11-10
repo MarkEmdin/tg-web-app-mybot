@@ -14,7 +14,6 @@ app.use(express.json())
 app.use(cors());
 
 
-
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
@@ -37,10 +36,13 @@ bot.on('message', async (msg) => {
             }
         })
     }
+    // bot.onText(/\/ads (.+)/, (msg, match) => {
+    //      bot.sendMessage(chatId, 'Вы хотите отдать: ' + match[1]);
+    // })
 
-    // добавление пользователя и его вещи
+        // добавление пользователя и его вещи
     if(msg?.web_app_data?.data) {
-        console.log(msg);
+        // console.log(msg);
         try {
             const userData = {
                 tg_id: msg.from.id,
@@ -68,13 +70,13 @@ bot.on('message', async (msg) => {
                 .then(res => {
                     // console.log(res.data);
                 }).catch(error => console.log(error));
-            // console.log(msg);
+             console.log(msg);
 
 
             await bot.sendMessage(chatId, 'Вы хотите отдать: ' + data?.title);
-            await bot.sendMessage(chatId, 'Город: ' + data?.city);
-            await bot.sendMessage(chatId, 'Описание: ' + data?.description);
-            await bot.sendMessage(chatId, 'способ связи: ' + data?.telephone);
+            // await bot.sendMessage(chatId, 'Город: ' + data?.city);
+            // await bot.sendMessage(chatId, 'Описание: ' + data?.description);
+            // await bot.sendMessage(chatId, 'способ связи: ' + data?.telephone);
 
             setTimeout(async () => {
                 await bot.sendMessage(chatId, 'Спасибо за вашу помощь!');
@@ -98,7 +100,7 @@ app.post('/web-data', async (req, res) => {
         })
         return res.status(200).json("ok");
     } catch (e) {
-        return res.status(500).json("error")
+        return res.status(500).json(e)
     }
 })
 
