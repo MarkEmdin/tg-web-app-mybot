@@ -49,9 +49,11 @@ bot.on('message', async (msg) => {
                 name: msg.from.first_name,
                 city: "TLV"
             }
-            axios.post(` http://localhost:8080/api/users/`, userData )
+            /// обратить внимание, что когда пользователь делает что-то первый раз выходит не очень(
+            //axios.post(` http://localhost:8080/api/users/`, userData )
+            axios.post(` http://77.244.221.156:8080/api/users/`, userData )
                 .then(res => {
-                    // console.log(res);
+
                 }).catch(error => console.log(error));
 
 
@@ -65,7 +67,7 @@ bot.on('message', async (msg) => {
                 description: data?.description
             }
             // поправить id того, кто отправляет посылку!!!
-            const apiUrlAds = `http://localhost:8080/api/ads?id=${msg.from.id}`
+            const apiUrlAds = `http://77.244.221.156:8080/api/ads?id=${msg.from.id}`
             axios.post(apiUrlAds,adsData)
                 .then(res => {
                     // console.log(res.data);
