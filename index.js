@@ -4,7 +4,8 @@ const cors = require('cors');
 const axios = require("axios");
 
 const token = '5779845670:AAG4ln-vlOTp5ACrdepZtkZsKKuQfm4K6UA';
-const webAppUrl = 'https://classy-praline-3a8d92.netlify.app';
+//const webAppUrl = 'https://classy-praline-3a8d92.netlify.app';
+const webAppUrl = 'http://77.244.221.156:3000';
 const PORT = 8000;
 
 const bot = new TelegramBot(token, {polling: true});
@@ -92,14 +93,15 @@ app.post('/web-data', async (req, res) => {
     const {queryId, product} = req.body;
     console.log(queryId, product);
     try {
-        await bot.answerWebAppQuery(queryId, {
-            type: 'article',
-            id: queryId,
-            title: 'Вы хотите забрать',
-            input_message_content: {
-                message_text: ` Для получения товара  ${product.title},напишите ${product.user_id}`
-            }
-        })
+        // await bot.answerWebAppQuery(queryId, {
+        //     type: 'article',
+        //     id: queryId,
+        //     title: 'Вы хотите забрать',
+        //     input_message_content: {
+        //         message_text: ` Для получения товара  ${product.title},напишите ${product.user_id}`
+        //     }
+        // })
+        // await bot.sendMessage(chatId, 'Вы хотите отдать: ' + data?.title);
         return res.status(200).json("ok");
     } catch (e) {
         return res.status(500).json(e)
