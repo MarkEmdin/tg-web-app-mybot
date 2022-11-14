@@ -23,7 +23,7 @@ bot.on('message', async (msg) => {
 
         await bot.sendMessage(chatId, 'Для просмотра всех вещей', {
             reply_markup: {
-                inline_keyboard: [
+                    inline_keyboard: [
                     [{text: 'Посмотреть всё', web_app: {url: webAppUrl}}]
                 ]
             }
@@ -84,28 +84,29 @@ bot.on('message', async (msg) => {
             setTimeout(async () => {
                 await bot.sendMessage(chatId, 'Спасибо за вашу помощь!');
             }, 3000)
+
+            app.post('/web-data', async (req, res) => {
+                const {queryId, product} = req.body;
+                console.log(queryId, product);
+                try {
+                    // await bot.answerWebAppQuery(queryId, {
+                    //     type: 'article',
+                    //     id: queryId,
+                    //     title: 'Вы хотите забрать',
+                    //     input_message_content: {
+                    //         message_text: ` Для получения товара  ${product.title},напишите ${product.user_id}`
+                    //     }
+                    // })
+                    await bot.sendMessage(chatId, 'Вы хотите получить: ' + product.title);
+                    return res.status(200).json("ok");
+                } catch (e) {
+                    return res.status(500).json(e)
+                }
+            })
         } catch (e) {
             console.log(e, msg);
         }
     }
 });
-app.post('/web-data', async (req, res) => {
-    const {queryId, product} = req.body;
-    console.log(queryId, product);
-    try {
-        // await bot.answerWebAppQuery(queryId, {
-        //     type: 'article',
-        //     id: queryId,
-        //     title: 'Вы хотите забрать',
-        //     input_message_content: {
-        //         message_text: ` Для получения товара  ${product.title},напишите ${product.user_id}`
-        //     }
-        // })
-        // await bot.sendMessage(chatId, 'Вы хотите отдать: ' + data?.title);
-        return res.status(200).json("ok");
-    } catch (e) {
-        return res.status(500).json(e)
-    }
-})
 
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
